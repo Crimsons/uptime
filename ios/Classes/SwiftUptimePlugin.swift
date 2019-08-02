@@ -1,5 +1,6 @@
 import Flutter
 import UIKit
+import Foundation
 
 public class SwiftUptimePlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
@@ -9,6 +10,6 @@ public class SwiftUptimePlugin: NSObject, FlutterPlugin {
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    result(0)
+    result(Int(ProcessInfo.processInfo.systemUptime * 1000))
   }
 }
