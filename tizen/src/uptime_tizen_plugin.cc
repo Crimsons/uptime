@@ -45,19 +45,22 @@ class UptimeTizenPlugin : public flutter::Plugin {
       const flutter::MethodCall<flutter::EncodableValue>& method_call,
       std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result) {
       const auto& method_name = method_call.method_name();
-    
-      if (method_name == "getUptime") {
+
+      auto readUptime = []() -> int64_t{
         struct sysinfo s_info;
         int error = sysinfo(&s_info);
-        int64_t res=0;
         if(!error) {
-          res=static_cast<int64_t>(s_info.uptime);
+          return static_cast<int64_t>(s_info.uptime)*1000;
         }
+        return -1;
+      };
 
-        if (error) {
-          result->Error("Failed to get uptime.");
-        } else {
+      if (method_name == "getUptime") {
+        int64_t res=readUptime();
+        if (res>=0) {
           result->Success(flutter::EncodableValue(res));
+        } else {
+          result->Error("Failed to get uptime.");
         }
       } else {
         result->NotImplemented();
