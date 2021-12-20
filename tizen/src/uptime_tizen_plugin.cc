@@ -1,8 +1,5 @@
 #include "uptime_tizen_plugin.h"
 
-// For getPlatformVersion; remove unless needed for your plugin implementation.
-#include <system_info.h>
-
 #include <flutter/method_channel.h>
 #include <flutter/plugin_registrar.h>
 #include <flutter/standard_method_codec.h>
@@ -11,10 +8,6 @@
 #include <string>
 
 #include <sys/sysinfo.h>
-#include <linux/unistd.h>
-#include <linux/kernel.h>
-
-#include "log.h"
 
 namespace {
 
